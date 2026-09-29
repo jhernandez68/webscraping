@@ -1,16 +1,25 @@
 {
-  "name": "puppeteer",
-  "version": "1.0.0",
-  "description": "",
+  "name": "red-zone-racing",
+  "version": "2.0.0",
+  "description": "Explorador de carreras y estad\u00edsticas de Red Zone SA-MP",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node scripts/build.mjs && node server.mjs",
+    "start": "node server.mjs",
+    "build": "node scripts/build.mjs",
+    "scrape": "node --env-file-if-exists=.env index.js",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check index.js && node --check public/app.js && node --check public/lib/racing.js && node --check server.mjs && node --check scripts/scrape.mjs",
+    "test:browser": "node tests/browser.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "puppeteer": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=22.9.0"
   }
 }

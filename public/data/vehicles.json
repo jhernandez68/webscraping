@@ -1,0 +1,560 @@
+{
+  "Admiral": {
+    "file": "Vehicle_445.jpg",
+    "category": "Sedanes",
+    "modelId": 445,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_445.jpg"
+  },
+  "Alpha": {
+    "file": "Vehicle_602.jpg",
+    "category": "Deportivos",
+    "modelId": 602,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_602.jpg"
+  },
+  "Ambulance": {
+    "file": "Vehicle_416.jpg",
+    "category": "Servicio público",
+    "modelId": 416,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_416.jpg"
+  },
+  "Banshee": {
+    "file": "Vehicle_429.jpg",
+    "category": "Deportivos",
+    "modelId": 429,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_429.jpg"
+  },
+  "Berkley's RC Van": {
+    "file": "Vehicle_459.jpg",
+    "category": "San Andreas",
+    "modelId": 459,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_459.jpg"
+  },
+  "Blade": {
+    "file": "Vehicle_536.jpg",
+    "category": "Lowriders",
+    "modelId": 536,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_536.jpg"
+  },
+  "Blista Compact": {
+    "file": "Vehicle_496.jpg",
+    "category": "Deportivos",
+    "modelId": 496,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_496.jpg"
+  },
+  "Bloodring Banger": {
+    "file": "Vehicle_504.jpg",
+    "category": "Sedanes",
+    "modelId": 504,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_504.jpg"
+  },
+  "Bobcat": {
+    "file": "Vehicle_422.jpg",
+    "category": "Industrial",
+    "modelId": 422,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_422.jpg"
+  },
+  "Bravura": {
+    "file": "Vehicle_401.jpg",
+    "category": "Sedanes",
+    "modelId": 401,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_401.jpg"
+  },
+  "Broadway": {
+    "file": "Vehicle_575.jpg",
+    "category": "Lowriders",
+    "modelId": 575,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_575.jpg"
+  },
+  "Buccaneer": {
+    "file": "Vehicle_518.jpg",
+    "category": "Sedanes",
+    "modelId": 518,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_518.jpg"
+  },
+  "Buffalo": {
+    "file": "Vehicle_402.jpg",
+    "category": "Deportivos",
+    "modelId": 402,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_402.jpg"
+  },
+  "Bullet": {
+    "file": "Vehicle_541.jpg",
+    "category": "Deportivos",
+    "modelId": 541,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_541.jpg"
+  },
+  "Burrito": {
+    "file": "Vehicle_482.jpg",
+    "category": "Industrial",
+    "modelId": 482,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_482.jpg"
+  },
+  "Cabbie": {
+    "file": "Vehicle_438.jpg",
+    "category": "Servicio público",
+    "modelId": 438,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_438.jpg"
+  },
+  "Caddy": {
+    "file": "Vehicle_457.jpg",
+    "category": "Especiales",
+    "modelId": 457,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_457.jpg"
+  },
+  "Cadrona": {
+    "file": "Vehicle_527.jpg",
+    "category": "Sedanes",
+    "modelId": 527,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_527.jpg"
+  },
+  "Cheetah": {
+    "file": "Vehicle_415.jpg",
+    "category": "Deportivos",
+    "modelId": 415,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_415.jpg"
+  },
+  "Clover": {
+    "file": "Vehicle_542.jpg",
+    "category": "Sedanes",
+    "modelId": 542,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_542.jpg"
+  },
+  "Comet": {
+    "file": "Vehicle_480.jpg",
+    "category": "Convertibles",
+    "modelId": 480,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_480.jpg"
+  },
+  "Elegant": {
+    "file": "Vehicle_507.jpg",
+    "category": "Sedanes",
+    "modelId": 507,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_507.jpg"
+  },
+  "Elegy": {
+    "file": "Vehicle_562.jpg",
+    "category": "Sedanes",
+    "modelId": 562,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_562.jpg"
+  },
+  "Emperor": {
+    "file": "Vehicle_585.jpg",
+    "category": "Sedanes",
+    "modelId": 585,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_585.jpg"
+  },
+  "Esperanto": {
+    "file": "Vehicle_419.jpg",
+    "category": "Sedanes",
+    "modelId": 419,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_419.jpg"
+  },
+  "Euros": {
+    "file": "Vehicle_587.jpg",
+    "category": "Deportivos",
+    "modelId": 587,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_587.jpg"
+  },
+  "FBI Rancher": {
+    "file": "Vehicle_490.jpg",
+    "category": "Servicio público",
+    "modelId": 490,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_490.jpg"
+  },
+  "FBI Truck": {
+    "file": "Vehicle_528.jpg",
+    "category": "Servicio público",
+    "modelId": 528,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_528.jpg"
+  },
+  "Faggio": {
+    "file": "Vehicle_462.jpg",
+    "category": "Motos",
+    "modelId": 462,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_462.jpg"
+  },
+  "Feltzer": {
+    "file": "Vehicle_533.jpg",
+    "category": "Convertibles",
+    "modelId": 533,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_533.jpg"
+  },
+  "Flash": {
+    "file": "Vehicle_565.jpg",
+    "category": "Deportivos",
+    "modelId": 565,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_565.jpg"
+  },
+  "Fortune": {
+    "file": "Vehicle_526.jpg",
+    "category": "Sedanes",
+    "modelId": 526,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_526.jpg"
+  },
+  "Freeway": {
+    "file": "Vehicle_463.jpg",
+    "category": "Motos",
+    "modelId": 463,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_463.jpg"
+  },
+  "Greenwood": {
+    "file": "Vehicle_492.jpg",
+    "category": "Sedanes",
+    "modelId": 492,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_492.jpg"
+  },
+  "HPV1000": {
+    "file": "Vehicle_523.jpg",
+    "category": "Servicio público",
+    "modelId": 523,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_523.jpg"
+  },
+  "Hermes": {
+    "file": "Vehicle_474.jpg",
+    "category": "Sedanes",
+    "modelId": 474,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_474.jpg"
+  },
+  "Hotknife": {
+    "file": "Vehicle_434.jpg",
+    "category": "Especiales",
+    "modelId": 434,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_434.jpg"
+  },
+  "Hotring": {
+    "file": "Vehicle_494.jpg",
+    "category": "San Andreas",
+    "modelId": 494,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_494.jpg"
+  },
+  "Hotring Racer A": {
+    "file": "Vehicle_502.jpg",
+    "category": "San Andreas",
+    "modelId": 502,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_502.jpg"
+  },
+  "Huntley": {
+    "file": "Vehicle_579.jpg",
+    "category": "Todoterreno",
+    "modelId": 579,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_579.jpg"
+  },
+  "Hustler": {
+    "file": "Vehicle_545.jpg",
+    "category": "Especiales",
+    "modelId": 545,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_545.jpg"
+  },
+  "Infernus": {
+    "file": "Vehicle_411.jpg",
+    "category": "Deportivos",
+    "modelId": 411,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_411.jpg"
+  },
+  "Jester": {
+    "file": "Vehicle_559.jpg",
+    "category": "Deportivos",
+    "modelId": 559,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_559.jpg"
+  },
+  "Landstalker": {
+    "file": "Vehicle_400.jpg",
+    "category": "Todoterreno",
+    "modelId": 400,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_400.jpg"
+  },
+  "Majestic": {
+    "file": "Vehicle_517.jpg",
+    "category": "Sedanes",
+    "modelId": 517,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_517.jpg"
+  },
+  "Manana": {
+    "file": "Vehicle_410.jpg",
+    "category": "Sedanes",
+    "modelId": 410,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_410.jpg"
+  },
+  "Merit": {
+    "file": "Vehicle_551.jpg",
+    "category": "Sedanes",
+    "modelId": 551,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_551.jpg"
+  },
+  "Moonbeam": {
+    "file": "Vehicle_418.jpg",
+    "category": "Familiares",
+    "modelId": 418,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_418.jpg"
+  },
+  "Mr Whoopee": {
+    "file": "Vehicle_423.jpg",
+    "category": "Especiales",
+    "modelId": 423,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_423.jpg"
+  },
+  "NRG-500": {
+    "file": "Vehicle_522.jpg",
+    "category": "Motos",
+    "modelId": 522,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_522.jpg"
+  },
+  "Oceanic": {
+    "file": "Vehicle_467.jpg",
+    "category": "Sedanes",
+    "modelId": 467,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_467.jpg"
+  },
+  "Patriot": {
+    "file": "Vehicle_470.jpg",
+    "category": "Todoterreno",
+    "modelId": 470,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_470.jpg"
+  },
+  "Perrenial": {
+    "file": "Vehicle_404.jpg",
+    "category": "Familiares",
+    "modelId": 404,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_404.jpg"
+  },
+  "Phoenix": {
+    "file": "Vehicle_603.jpg",
+    "category": "Deportivos",
+    "modelId": 603,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_603.jpg"
+  },
+  "Police Car (LSPD)": {
+    "file": "Vehicle_596.jpg",
+    "category": "San Andreas",
+    "modelId": 596,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_596.jpg"
+  },
+  "Police Car (LVPD)": {
+    "file": "Vehicle_598.jpg",
+    "category": "San Andreas",
+    "modelId": 598,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_598.jpg"
+  },
+  "Police Car (SFPD)": {
+    "file": "Vehicle_597.jpg",
+    "category": "San Andreas",
+    "modelId": 597,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_597.jpg"
+  },
+  "Police Ranger": {
+    "file": "Vehicle_599.jpg",
+    "category": "San Andreas",
+    "modelId": 599,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_599.jpg"
+  },
+  "Pony": {
+    "file": "Vehicle_413.jpg",
+    "category": "Industrial",
+    "modelId": 413,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_413.jpg"
+  },
+  "Premier": {
+    "file": "Vehicle_426.jpg",
+    "category": "Sedanes",
+    "modelId": 426,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_426.jpg"
+  },
+  "Previon": {
+    "file": "Vehicle_436.jpg",
+    "category": "Sedanes",
+    "modelId": 436,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_436.jpg"
+  },
+  "Primo": {
+    "file": "Vehicle_547.jpg",
+    "category": "Sedanes",
+    "modelId": 547,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_547.jpg"
+  },
+  "Rancher": {
+    "file": "Vehicle_489.jpg",
+    "category": "Todoterreno",
+    "modelId": 489,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_489.jpg"
+  },
+  "Regina": {
+    "file": "Vehicle_479.jpg",
+    "category": "Familiares",
+    "modelId": 479,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_479.jpg"
+  },
+  "Remington": {
+    "file": "Vehicle_534.jpg",
+    "category": "Lowriders",
+    "modelId": 534,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_534.jpg"
+  },
+  "Romero": {
+    "file": "Vehicle_442.jpg",
+    "category": "Especiales",
+    "modelId": 442,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_442.jpg"
+  },
+  "Rumpo": {
+    "file": "Vehicle_440.jpg",
+    "category": "Industrial",
+    "modelId": 440,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_440.jpg"
+  },
+  "Sabre": {
+    "file": "Vehicle_475.jpg",
+    "category": "Deportivos",
+    "modelId": 475,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_475.jpg"
+  },
+  "Sadler": {
+    "file": "Vehicle_543.jpg",
+    "category": "Industrial",
+    "modelId": 543,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_543.jpg"
+  },
+  "Sanchez": {
+    "file": "Vehicle_468.jpg",
+    "category": "Motos",
+    "modelId": 468,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_468.jpg"
+  },
+  "Sandking": {
+    "file": "Vehicle_495.jpg",
+    "category": "Todoterreno",
+    "modelId": 495,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_495.jpg"
+  },
+  "Sentinel": {
+    "file": "Vehicle_405.jpg",
+    "category": "Sedanes",
+    "modelId": 405,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_405.jpg"
+  },
+  "Slamvan": {
+    "file": "Vehicle_535.jpg",
+    "category": "Lowriders",
+    "modelId": 535,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_535.jpg"
+  },
+  "Solair": {
+    "file": "Vehicle_458.jpg",
+    "category": "Familiares",
+    "modelId": 458,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_458.jpg"
+  },
+  "Stafford": {
+    "file": "Vehicle_580.jpg",
+    "category": "Sedanes",
+    "modelId": 580,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_580.jpg"
+  },
+  "Stallion": {
+    "file": "Vehicle_439.jpg",
+    "category": "Convertibles",
+    "modelId": 439,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_439.jpg"
+  },
+  "Stratum": {
+    "file": "Vehicle_561.jpg",
+    "category": "Familiares",
+    "modelId": 561,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_561.jpg"
+  },
+  "Stretch": {
+    "file": "Vehicle_409.jpg",
+    "category": "Especiales",
+    "modelId": 409,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_409.jpg"
+  },
+  "Sultan": {
+    "file": "Vehicle_560.jpg",
+    "category": "Sedanes",
+    "modelId": 560,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_560.jpg"
+  },
+  "Super GT": {
+    "file": "Vehicle_506.jpg",
+    "category": "Deportivos",
+    "modelId": 506,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_506.jpg"
+  },
+  "Tahoma": {
+    "file": "Vehicle_566.jpg",
+    "category": "Lowriders",
+    "modelId": 566,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_566.jpg"
+  },
+  "Tampa": {
+    "file": "Vehicle_549.jpg",
+    "category": "Sedanes",
+    "modelId": 549,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_549.jpg"
+  },
+  "Taxi": {
+    "file": "Vehicle_420.jpg",
+    "category": "Servicio público",
+    "modelId": 420,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_420.jpg"
+  },
+  "Trashmaster": {
+    "file": "Vehicle_408.jpg",
+    "category": "Industrial",
+    "modelId": 408,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_408.jpg"
+  },
+  "Turismo": {
+    "file": "Vehicle_451.jpg",
+    "category": "Deportivos",
+    "modelId": 451,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_451.jpg"
+  },
+  "Uranus": {
+    "file": "Vehicle_558.jpg",
+    "category": "Deportivos",
+    "modelId": 558,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_558.jpg"
+  },
+  "Virgo": {
+    "file": "Vehicle_491.jpg",
+    "category": "Sedanes",
+    "modelId": 491,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_491.jpg"
+  },
+  "Voodoo": {
+    "file": "Vehicle_412.jpg",
+    "category": "Lowriders",
+    "modelId": 412,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_412.jpg"
+  },
+  "Walton": {
+    "file": "Vehicle_478.jpg",
+    "category": "Industrial",
+    "modelId": 478,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_478.jpg"
+  },
+  "Willard": {
+    "file": "Vehicle_529.jpg",
+    "category": "Sedanes",
+    "modelId": 529,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_529.jpg"
+  },
+  "Windsor": {
+    "file": "Vehicle_555.jpg",
+    "category": "Convertibles",
+    "modelId": 555,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_555.jpg"
+  },
+  "ZR-350": {
+    "file": "Vehicle_477.jpg",
+    "category": "Deportivos",
+    "modelId": 477,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_477.jpg"
+  },
+  "Pizzaboy": {
+    "file": "Vehicle_448.jpg",
+    "category": "Motos",
+    "modelId": 448,
+    "source": "https://media.githubusercontent.com/media/openmultiplayer/web/8c89186e99f8f044b2f332b8f8c72081437242b6/frontend/public/images/vehiclePictures/Vehicle_448.jpg"
+  }
+}
