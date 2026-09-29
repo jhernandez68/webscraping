@@ -1,4 +1,5 @@
-import { normalizeSnapshot, normalize, formatTime, parseTime, filterRaces, sortRaces, getRanking, getVehicles, toCsv } from './lib/racing.js';
+import { normalize, formatTime, parseTime, filterRaces, sortRaces, getRanking, getVehicles, toCsv } from './lib/racing.js';
+import { parseCatalog, loadVersion } from './lib/versions.js';
 
 const paths = {
   grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
@@ -28,7 +29,7 @@ const percent = value => `${value.toLocaleString('es-CO', { maximumFractionDigit
 const date = value => value ? new Intl.DateTimeFormat('es-CO', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'America/Bogota' }).format(new Date(value)) : 'Fecha de captura no disponible';
 const views = { overview: ['Vista general', 'grid'], races: ['Explorar carreras', 'flag'], ranking: ['Clasificación', 'trophy'], garage: ['Garaje', 'car'], favorites: ['Mis favoritas', 'heart'] };
 const main = document.querySelector('#main');
-let original, snapshot, previous = null, vehicleAssets = {}, page = 1, toastTimer;
+let snapshot, catalog, selectedVersion, comparedVersion, previous = null, vehicleAssets = {}, page = 1, toastTimer, versionRequest = 0;
 let favorites;
 try { const saved = JSON.parse(localStorage.getItem('redzone:favorites') || '[]'); favorites = new Set(Array.isArray(saved) ? saved.filter(x => typeof x === 'string') : []); } catch { favorites = new Set(); }
 const params = new URLSearchParams(location.search);
@@ -38,8 +39,42 @@ let filters = Object.fromEntries(filterKeys.map(key => [key, params.get(key) || 
 
 function hydrateIcons(scope = document) { scope.querySelectorAll('[data-icon]').forEach(node => { node.innerHTML = icon(node.dataset.icon); }); }
 function toast(message) { const el = document.querySelector('#toast'); el.textContent = message; el.classList.add('visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('visible'), 3800); }
-function syncUrl(push = false) { const url = new URL(location.href); url.search = ''; if (view !== 'overview') url.searchParams.set('view', view); for (const key of filterKeys) if (filters[key]) url.searchParams.set(key, filters[key]); if (push && url.href !== location.href) history.pushState({}, '', url); else history.replaceState({}, '', url); }
+function syncUrl(push = false) { const url = new URL(location.href); url.search = ''; if (view !== 'overview') url.searchParams.set('view', view); if (selectedVersion && selectedVersion.id !== catalog.latest) url.searchParams.set('snapshot', selectedVersion.id); for (const key of filterKeys) if (filters[key]) url.searchParams.set(key, filters[key]); if (push && url.href !== location.href) history.pushState({}, '', url); else history.replaceState({}, '', url); }
 function dataDate() { return snapshot.capturedAt ? `Captura · ${date(snapshot.capturedAt)}` : snapshot.sourceUpdatedAt ? `Archivo · ${date(snapshot.sourceUpdatedAt)}` : snapshot.importedName || 'Archivo sin fecha de captura'; }
+function versionLabel(entry) {
+  const value = entry.capturedAt || entry.publishedAt;
+  const label = date(value);
+  const sameDay = catalog.versions.filter(item => date(item.capturedAt || item.publishedAt) === label).length > 1;
+  return value && sameDay ? `${label} · ${new Intl.DateTimeFormat('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'America/Bogota' }).format(new Date(value))}` : label;
+}
+function comparisonLabel() { return comparedVersion ? `Cambios frente a ${versionLabel(comparedVersion)}` : 'Primer corte disponible · Sin versión anterior para comparar.'; }
+function renderVersionPicker() {
+  const select = document.querySelector('#snapshot-select');
+  select.innerHTML = catalog.versions.map((entry, index) => `<option value="${entry.id}">${index === 0 ? 'Última · ' : ''}${esc(versionLabel(entry))}</option>`).join('');
+  select.value = selectedVersion.id;
+}
+async function selectVersion(id, push = false) {
+  const request = ++versionRequest;
+  const select = document.querySelector('#snapshot-select');
+  select.disabled = true;
+  select.setAttribute('aria-busy', 'true');
+  try {
+    const loaded = await loadVersion(catalog, id);
+    if (request !== versionRequest) return;
+    snapshot = loaded.snapshot; previous = loaded.previous; selectedVersion = loaded.selected; comparedVersion = loaded.compared;
+    page = 1;
+    closeDialogs(); renderVersionPicker(); syncUrl(push); render();
+    document.querySelector('#data-button').disabled = false;
+    document.querySelector('#about-button').disabled = false;
+  } catch (error) {
+    if (request !== versionRequest) return;
+    if (!snapshot) throw error;
+    select.value = selectedVersion.id;
+    syncUrl(); toast(error.message);
+  } finally {
+    if (request === versionRequest) { select.disabled = !snapshot; select.removeAttribute('aria-busy'); }
+  }
+}
 function validFilters() {
   const low = parseTime(filters.minTime), high = parseTime(filters.maxTime);
   if ((filters.minTime && low === null) || (filters.maxTime && high === null)) return 'Usa segundos o el formato mm:ss.000 para los tiempos.';
@@ -81,7 +116,7 @@ function render() {
   renderNav(); syncUrl();
   if (view === 'overview' || view === 'races' || view === 'favorites') {
     const title = view === 'favorites' ? 'Tu próxima parrilla.' : 'Encuentra tu próxima carrera.';
-    main.innerHTML = `${view === 'overview' ? hero() + metrics() : `<div class="page-heading"><span class="eyebrow">${view === 'favorites' ? 'GUARDA. PRACTICA. SUPÉRATE.' : 'EL ARCHIVO DE RED ZONE'}</span><h1>${title}</h1><p>${view === 'favorites' ? 'Las carreras que quieres volver a correr. Guardadas en este dispositivo.' : 'Filtra por vehículo, piloto o tiempo. Cada récord tiene una historia.'}</p></div>`}<div class="content-grid"><section class="race-section">${sectionTitle('LA PISTA TE ESPERA', view === 'favorites' ? 'Carreras favoritas' : 'Explorar carreras', `<button class="text-button" id="export-races">${icon('download')} Exportar CSV</button>`)}${filtersPanel()}<div id="race-results"></div></section><aside class="insights" id="insights"></aside></div><section class="vehicle-section">${sectionTitle('ELIGE TU MÁQUINA', 'Íconos de San Andreas', `<button class="text-button" data-nav="garage">Ver garaje ${icon('arrow')}</button>`)}<div class="featured-vehicles">${getVehicles(snapshot.races).slice(0, 4).map(vehicleCard).join('')}</div></section><div class="data-caption">${icon('clock')} <span>${esc(dataDate())} · Los resultados corresponden al archivo cargado.</span></div>`;
+    main.innerHTML = `${view === 'overview' ? hero() + metrics() : `<div class="page-heading"><span class="eyebrow">${view === 'favorites' ? 'GUARDA. PRACTICA. SUPÉRATE.' : 'EL ARCHIVO DE RED ZONE'}</span><h1>${title}</h1><p>${view === 'favorites' ? 'Las carreras que quieres volver a correr. Guardadas en este dispositivo.' : 'Filtra por vehículo, piloto o tiempo. Cada récord tiene una historia.'}</p></div>`}<div class="content-grid"><section class="race-section">${sectionTitle('LA PISTA TE ESPERA', view === 'favorites' ? 'Carreras favoritas' : 'Explorar carreras', `<button class="text-button" id="export-races">${icon('download')} Exportar CSV</button>`)}${filtersPanel()}<div id="race-results"></div></section><aside class="insights" id="insights"></aside></div><section class="vehicle-section">${sectionTitle('ELIGE TU MÁQUINA', 'Íconos de San Andreas', `<button class="text-button" data-nav="garage">Ver garaje ${icon('arrow')}</button>`)}<div class="featured-vehicles">${getVehicles(snapshot.races).slice(0, 4).map(vehicleCard).join('')}</div></section><div class="data-caption">${icon('clock')} <span>${esc(dataDate())} · Los resultados corresponden a la versión seleccionada.</span></div>`;
     renderRaceResults();
   } else if (view === 'ranking') {
     main.innerHTML = `<div class="page-heading"><span class="eyebrow">EL CRONÓMETRO NO MIENTE</span><h1>Los dueños del récord.</h1><p>Un primer lugar por carrera. Descubre quién tiene más y cuánto domina.</p></div>${metrics()}${sectionTitle('CLASIFICACIÓN DE PILOTOS', 'Top records · Red Zone', `<button class="text-button" id="export-ranking">${icon('download')} Exportar ranking</button>`)}${filtersPanel()}<div id="ranking-results"></div><div class="data-caption">${icon('clock')} ${esc(dataDate())}</div>`;
@@ -117,14 +152,14 @@ function renderRaceResults() {
 
 function renderInsights(races) {
   const leaders = getRanking(races, previousFiltered()).slice(0, 5);
-  document.querySelector('#insights').innerHTML = `<section class="leaderboard-panel"><div class="panel-heading"><span class="eyebrow">LOS MÁS RÁPIDOS</span><span class="gold-text">${icon('trophy')}</span></div><h2>Top pilotos<span>/${leaders.length < 5 ? leaders.length : '05'}</span></h2><p class="panel-subtitle">Más récords en las carreras filtradas</p><div class="mini-ranking">${leaders.length ? leaders.map((player, i) => `<button class="mini-player" data-holder="${esc(player.name)}"><span class="rank-number ${i === 0 ? 'first' : ''}">${String(player.position).padStart(2, '0')}</span><span class="player-info"><strong>${esc(player.name)}</strong><span>${percent(player.share)} de las carreras ${delta(player)}</span><span class="share-track"><span style="width:${Math.min(100, player.share)}%"></span></span></span><span class="player-count">${number(player.count)}<small>récords</small></span></button>`).join('') : '<p class="muted small">Sin récords para estos filtros.</p>'}</div><button class="leaderboard-link" data-nav="ranking">Ver clasificación completa ${icon('arrow')}</button></section><section class="pitstop"><span class="eyebrow">BUSCA TU SIGUIENTE RETO</span><h3>Otra vuelta.<br>Un mejor tiempo.</h3><p>Deja que la pista te encuentre.</p><button class="button button-quiet" id="random-race">${icon('spark')} Carrera aleatoria ${icon('arrow')}</button></section>`;
+  document.querySelector('#insights').innerHTML = `<section class="leaderboard-panel"><div class="panel-heading"><span class="eyebrow">LOS MÁS RÁPIDOS</span><span class="gold-text">${icon('trophy')}</span></div><h2>Top pilotos<span>/${leaders.length < 5 ? leaders.length : '05'}</span></h2><p class="panel-subtitle">Más récords en las carreras filtradas</p><p class="comparison-caption">${esc(comparisonLabel())}</p><div class="mini-ranking">${leaders.length ? leaders.map((player, i) => `<button class="mini-player" data-holder="${esc(player.name)}"><span class="rank-number ${i === 0 ? 'first' : ''}">${String(player.position).padStart(2, '0')}</span><span class="player-info"><strong>${esc(player.name)}</strong><span>${percent(player.share)} de las carreras ${delta(player)}</span><span class="share-track"><span style="width:${Math.min(100, player.share)}%"></span></span></span><span class="player-count">${number(player.count)}<small>récords</small></span></button>`).join('') : '<p class="muted small">Sin récords para estos filtros.</p>'}</div><button class="leaderboard-link" data-nav="ranking">Ver clasificación completa ${icon('arrow')}</button></section><section class="pitstop"><span class="eyebrow">BUSCA TU SIGUIENTE RETO</span><h3>Otra vuelta.<br>Un mejor tiempo.</h3><p>Deja que la pista te encuentre.</p><button class="button button-quiet" id="random-race">${icon('spark')} Carrera aleatoria ${icon('arrow')}</button></section>`;
 }
 
 function renderRanking() {
   document.querySelector('#filter-error').textContent = validFilters();
   const data = filtered();
   const ranking = getRanking(data, previousFiltered());
-  document.querySelector('#ranking-results').innerHTML = `<div class="ranking-info"><span>${number(ranking.length)} pilotos · ${number(data.length)} carreras en el filtro</span><span>${previous ? `Comparando con ${esc(previous.importedName || date(previous.capturedAt || previous.sourceUpdatedAt))}` : 'Carga un corte anterior en Mis datos para ver los cambios.'}</span></div>${ranking.length ? `<div class="ranking-podium">${ranking.slice(0, 3).map((player, i) => `<button class="podium-card podium-${i}" data-holder="${esc(player.name)}"><span class="podium-place">${icon('trophy')} #${player.position}</span><span class="podium-avatar">${esc(player.name.replace(/\[[^\]]*\]/g, '').slice(0, 2).toUpperCase() || 'RZ')}</span><h2>${esc(player.name)}</h2><strong>${number(player.count)}<small>récords</small></strong><span>${percent(player.share)} del filtro · ${player.vehicleCount} vehículos ${delta(player)}</span></button>`).join('')}</div><div class="table-wrap ranking-table"><table><thead><tr><th>POSICIÓN</th><th>PILOTO</th><th>RÉCORDS</th><th>DOMINIO DEL FILTRO</th><th>VEHÍCULOS</th>${previous ? '<th>CAMBIO</th>' : ''}<th><span class="sr-only">Ver carreras</span></th></tr></thead><tbody>${ranking.map(player => `<tr><td class="rank-number ${player.position === 1 ? 'first' : ''}">#${player.position}</td><td><button class="holder-name" data-holder="${esc(player.name)}">${esc(player.name)}</button></td><td class="ranking-count">${number(player.count)}</td><td><div class="dominance"><span class="share-track"><span style="width:${player.share}%"></span></span><span>${percent(player.share)}</span></div></td><td>${player.vehicleCount}</td>${previous ? `<td>${delta(player)}</td>` : ''}<td><button class="icon-button" data-holder="${esc(player.name)}" aria-label="Ver carreras de ${esc(player.name)}">${icon('arrow')}</button></td></tr>`).join('')}</tbody></table></div>` : emptyState('Nadie en esta parrilla.', 'Prueba con otros filtros para encontrar pilotos.')}`;
+  document.querySelector('#ranking-results').innerHTML = `<div class="ranking-info"><span>${number(ranking.length)} pilotos · ${number(data.length)} carreras en el filtro</span><span>${esc(comparisonLabel())}</span></div>${ranking.length ? `<div class="ranking-podium">${ranking.slice(0, 3).map((player, i) => `<button class="podium-card podium-${i}" data-holder="${esc(player.name)}"><span class="podium-place">${icon('trophy')} #${player.position}</span><span class="podium-avatar">${esc(player.name.replace(/\[[^\]]*\]/g, '').slice(0, 2).toUpperCase() || 'RZ')}</span><h2>${esc(player.name)}</h2><strong>${number(player.count)}<small>récords</small></strong><span>${percent(player.share)} del filtro · ${player.vehicleCount} vehículos ${delta(player)}</span></button>`).join('')}</div><div class="table-wrap ranking-table"><table><thead><tr><th>POSICIÓN</th><th>PILOTO</th><th>RÉCORDS</th><th>DOMINIO DEL FILTRO</th><th>VEHÍCULOS</th>${previous ? '<th>CAMBIO</th>' : ''}<th><span class="sr-only">Ver carreras</span></th></tr></thead><tbody>${ranking.map(player => `<tr><td class="rank-number ${player.position === 1 ? 'first' : ''}">#${player.position}</td><td><button class="holder-name" data-holder="${esc(player.name)}">${esc(player.name)}</button></td><td class="ranking-count">${number(player.count)}</td><td><div class="dominance"><span class="share-track"><span style="width:${player.share}%"></span></span><span>${percent(player.share)}</span></div></td><td>${player.vehicleCount}</td>${previous ? `<td>${delta(player)}</td>` : ''}<td><button class="icon-button" data-holder="${esc(player.name)}" aria-label="Ver carreras de ${esc(player.name)}">${icon('arrow')}</button></td></tr>`).join('')}</tbody></table></div>` : emptyState('Nadie en esta parrilla.', 'Prueba con otros filtros para encontrar pilotos.')}`;
 }
 
 function refreshResults() { syncUrl(); if (view === 'ranking') renderRanking(); else renderRaceResults(); }
@@ -135,7 +170,7 @@ function openRace(key) {
   if (!document.querySelector('#detail-dialog').open) document.querySelector('#detail-dialog').showModal();
 }
 function closeDialogs() { document.querySelectorAll('dialog[open]').forEach(dialog => dialog.close()); }
-function openData() { document.querySelector('#data-info').innerHTML = `<strong>${number(snapshot.races.length)} carreras cargadas</strong><span>${esc(dataDate())}</span>${previous ? `<span>Comparación: ${number(previous.races.length)} carreras</span>` : ''}`; document.querySelector('#data-dialog').showModal(); }
+function openData() { if (!snapshot) return; document.querySelector('#data-info').innerHTML = `<strong>${number(snapshot.races.length)} carreras publicadas</strong><span>${esc(dataDate())}</span><span>${esc(comparisonLabel())}</span><span>${catalog.versions.length} versiones disponibles</span>`; document.querySelector('#data-dialog').showModal(); }
 function download(content, name, type) { const url = URL.createObjectURL(new Blob([content], { type })); const link = document.createElement('a'); link.href = url; link.download = name; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
 
 document.addEventListener('click', event => {
@@ -169,7 +204,6 @@ document.addEventListener('click', event => {
   if (target.id === 'export-races') { const data = sortRaces(filtered(), filters.sort); if (!data.length) { toast('No hay carreras para exportar.'); return; } download(toCsv([['ID', 'Carrera', 'Vehículo', 'Checkpoints', 'Piloto', 'Tiempo', 'Milisegundos'], ...data.map(race => [race.id, race.name, race.vehicle, race.checkpoints, race.holder, formatTime(race.timeMs), race.timeMs])]), 'red-zone-carreras.csv', 'text/csv;charset=utf-8'); toast(`${number(data.length)} carreras exportadas.`); }
   if (target.id === 'export-ranking') { const data = getRanking(filtered(), previousFiltered()); if (!data.length) { toast('No hay pilotos para exportar.'); return; } download(toCsv([['Posición', 'Piloto', 'Récords', '% carreras filtradas', 'Vehículos', 'Cambio entre cortes'], ...data.map(player => [player.position, player.name, player.count, player.share.toFixed(2), player.vehicleCount, player.delta ?? ''])]), 'red-zone-ranking.csv', 'text/csv;charset=utf-8'); toast('Ranking exportado.'); }
   if (target.id === 'download-snapshot') download(JSON.stringify(snapshot, null, 2), 'red-zone-corte.json', 'application/json');
-  if (target.id === 'reset-data') { snapshot = original; previous = null; closeDialogs(); navigate('overview', true); toast('Archivo original restaurado.'); }
 });
 
 document.addEventListener('input', event => {
@@ -184,31 +218,23 @@ document.addEventListener('input', event => {
 document.addEventListener('change', async event => {
   if (event.target.dataset.filter && event.target.tagName === 'SELECT') { filters[event.target.dataset.filter] = event.target.value; page = 1; refreshResults(); }
   if (event.target.id === 'sort-races') { filters.sort = event.target.value; page = 1; refreshResults(); }
-  if (['import-current', 'import-previous'].includes(event.target.id)) {
-    const file = event.target.files[0]; if (!file) return;
-    try {
-      if (file.size > 10 * 1024 * 1024) throw new Error('El archivo supera el límite de 10 MB.');
-      const imported = normalizeSnapshot(JSON.parse(await file.text()), { importedName: file.name });
-      if (event.target.id === 'import-current') snapshot = imported; else previous = imported;
-      closeDialogs(); filters = Object.fromEntries(filterKeys.map(key => [key, ''])); page = 1; render();
-      toast(`${number(imported.races.length)} carreras cargadas${imported.skipped ? ` · ${imported.skipped} filas no válidas omitidas` : ''}.`);
-    } catch (error) { toast(error instanceof SyntaxError ? 'El archivo no contiene JSON válido. Usa el resultados.txt del scraper.' : error.message); }
-    event.target.value = '';
-  }
+  if (event.target.id === 'snapshot-select') await selectVersion(event.target.value, true);
 });
 
 document.addEventListener('keydown', event => { if (event.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName) && !document.querySelector('dialog[open]')) { event.preventDefault(); document.querySelector('#race-search, #garage-search')?.focus(); } });
-window.addEventListener('popstate', () => { const query = new URLSearchParams(location.search); view = Object.hasOwn(views, query.get('view')) ? query.get('view') : 'overview'; filters = Object.fromEntries(filterKeys.map(key => [key, query.get(key) || ''])); page = 1; render(); });
+window.addEventListener('popstate', async () => { if (!snapshot) return; const query = new URLSearchParams(location.search); view = Object.hasOwn(views, query.get('view')) ? query.get('view') : 'overview'; filters = Object.fromEntries(filterKeys.map(key => [key, query.get(key) || ''])); page = 1; const id = query.get('snapshot') || catalog.latest; await selectVersion(catalog.versions.some(entry => entry.id === id) ? id : catalog.latest); });
 document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => { if (event.target === dialog) { const rect = dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close(); } }));
 
 hydrateIcons();
 renderNav();
 try {
-  const response = await fetch('./data/races.json');
-  if (!response.ok) throw new Error('No se pudo cargar el archivo de carreras.');
-  original = normalizeSnapshot(await response.json()); snapshot = original;
+  const response = await fetch('./data/versions.json', { cache: 'no-cache' });
+  if (!response.ok) throw new Error('No se pudo cargar el historial de carreras.');
+  catalog = parseCatalog(await response.json());
   try { const cars = await fetch('./data/vehicles.json'); if (cars.ok) vehicleAssets = await cars.json(); } catch {}
-  render();
+  const requested = params.get('snapshot');
+  await selectVersion(catalog.versions.some(entry => entry.id === requested) ? requested : catalog.latest);
+  if (requested && selectedVersion.id !== requested) toast('La versión del enlace no está disponible. Mostrando la última publicada.');
 } catch (error) {
   main.innerHTML = `<div class="initial-state"><h1>Estamos en boxes.</h1><p>${esc(error.message)}</p><button class="button button-primary" id="retry-load">Volver a intentar ${icon('arrow')}</button></div>`;
   document.querySelector('#retry-load').addEventListener('click', () => location.reload());

@@ -19,10 +19,11 @@ Abre `http://localhost:3000`. El comando prepara los datos y sirve únicamente `
 - Filtros combinados por vehículo, piloto, tiempo mínimo/máximo, checkpoints y disponibilidad de récord.
 - Ordenación numérica por tiempo y checkpoints, por vehículo o por nombre; paginación.
 - Ranking con cantidad de récords, porcentaje del conjunto filtrado y variedad de vehículos. Los empates comparten posición.
-- Comparación de dos cortes: ganancias y pérdidas de récords, incluyendo pilotos que pierden todos.
+- Selector de versiones publicadas en la esquina superior derecha, con enlaces compartibles a cada corte.
+- Comparación automática frente al corte inmediatamente anterior: ganancias y pérdidas de récords, incluyendo pilotos que pierden todos.
 - Garaje con acceso directo a las carreras de cada vehículo.
 - Detalle de carrera, favoritos en el dispositivo y selección aleatoria dentro de los filtros.
-- Importación local de `resultados.txt` o snapshots JSON de hasta 10 MB.
+- Publicación de datos exclusiva desde GitHub, sin formularios de carga en la web.
 - Exportación CSV de las carreras o el ranking filtrados; descarga del corte JSON.
 - Diseño adaptable, navegación de teclado, diálogos con Escape y estados vacíos o de error.
 
@@ -34,7 +35,23 @@ El scraper original guardaba encabezados repetidos entre bloques. El normalizado
 
 Cada carrera aporta como máximo un récord al jugador que aparece en su fila. El porcentaje se calcula sobre todas las carreras que cumplen los filtros, incluidas las que no tienen récord. Los apodos se mantienen separados: no se presume que dos nombres pertenecen a la misma persona. La comparación calcula la diferencia de conteos entre los conjuntos filtrados; agregar o quitar carreras del archivo también puede cambiar esos conteos.
 
-No hay historial de tiempos, top 10 por carrera, fecha de cada récord ni trazado del circuito en los datos de origen. La aplicación no inventa esa información. Los archivos importados duran la sesión; puedes descargar un corte para conservarlo. Los favoritos se mantienen en `localStorage` y se identifican por el nombre exacto y el vehículo, no por la posición en la lista.
+Los commits de `resultados.txt` forman el historial de cortes; las versiones consecutivas con los mismos datos se omiten. No hay top 10 por carrera, fecha de cada récord ni trazado del circuito en los datos de origen. La aplicación no inventa esa información. Los favoritos se mantienen en `localStorage` y se identifican por el nombre exacto y el vehículo, no por la posición en la lista.
+
+## Publicar un nuevo corte
+
+Desde GitHub, cambia a la rama **master**, abre `resultados.txt` y reemplaza su contenido por el nuevo archivo del scraper, o usa **Add file → Upload files** para subirlo a la raíz con ese mismo nombre. Confirma el commit en `master`. También puedes hacerlo con Git:
+
+```bash
+git switch master
+git pull --ff-only
+git add resultados.txt
+git commit -m "Actualizar carreras de Red Zone"
+git push origin master
+```
+
+GitHub Actions reconstruye y publica la web automáticamente. El nuevo corte queda como última versión y los anteriores se recuperan del historial de Git. No necesitas modificar JSON públicos ni el selector. Si usas el scraper y se genera `resultados.meta.json`, inclúyelo en el mismo commit para registrar la fecha de captura. Si subes únicamente el TXT, se muestra la fecha de publicación en Git; la metadata de capturas anteriores se ignora.
+
+Solo las cuentas con permiso de escritura en este repositorio pueden publicar cambios. Los visitantes pueden consultar y descargar las versiones, pero no subirlas ni alterar los datos compartidos. No hay claves ni un panel de administración en el navegador. No reescribas el historial de `master` si quieres conservar los cortes y sus enlaces.
 
 ## Actualizar el scraping
 
@@ -53,7 +70,7 @@ npm run build
 
 `SCRAPER_HEADLESS=false` muestra el navegador y `SCRAPER_TIMEOUT` configura el tiempo de espera. El scraper amplía la lista mientras exista el botón de carga, sin el antiguo límite de 1.005. Si la carga falla, termina con error antes de guardar los resultados. Al completar la captura guarda el archivo anterior en `resultados.previous.json`, actualiza `resultados.txt`, genera el snapshot público y registra su fecha en `resultados.meta.json`.
 
-La captura requiere acceso al servidor y credenciales válidas. No se ejecutó una captura autenticada durante la implementación. La web funciona completamente con el archivo incluido o los archivos que importes.
+La captura requiere acceso al servidor y credenciales válidas. No se ejecutó una captura autenticada durante la implementación. La web funciona con los cortes publicados desde el repositorio.
 
 Las credenciales que estaban escritas en el script se retiraron. Si siguen vigentes, cámbialas: eliminar una cadena del archivo actual no la elimina del historial de Git.
 
@@ -88,7 +105,8 @@ Las pruebas de navegador necesitan las dependencias de Puppeteer y Chrome. `BROW
 | `public/lib/racing.js` | Normalización, tiempos, filtros, ranking y CSV |
 | `public/app.js`, `public/style.css` | Interfaz e interacciones |
 | `public/data/races.json` | Corte normalizado para el navegador |
-| `scripts/build.mjs` | Generación de datos y distribución estática |
+| `public/data/versions.json`, `public/data/snapshots/` | Catálogo y cortes generados al construir; no se editan ni se suben a Git |
+| `scripts/build.mjs`, `scripts/snapshots.mjs` | Recuperación del historial y distribución estática |
 | `server.mjs` | Servidor local limitado al directorio público |
 | `tests/` | Pruebas de datos e interacciones |
 

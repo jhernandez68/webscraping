@@ -8,3 +8,5 @@ test-results/
 playwright-report/
 *.tmp
 resultados.previous.json
+public/data/versions.json
+public/data/snapshots/

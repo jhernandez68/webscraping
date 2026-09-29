@@ -19,20 +19,19 @@
     <div class="sidebar-footer"><span class="avatar">JH</span><span>Hecho por Jhoan<small>Para los que corren de verdad.</small></span></div>
   </aside>
   <div class="workspace">
-    <header class="topbar"><div class="breadcrumb"><span>RED ZONE</span><span>/</span><strong id="breadcrumb">Vista general</strong></div><div class="topbar-actions"><span class="snapshot-label"><span class="status-dot"></span> ARCHIVO DE CARRERAS</span><button class="button button-quiet" id="data-button"><span data-icon="upload"></span><span>Mis datos</span></button><a class="github-link" href="https://github.com/jhernandez68/webscraping" target="_blank" rel="noopener noreferrer" aria-label="Ver proyecto en GitHub"><span data-icon="github"></span></a></div></header>
+    <header class="topbar"><div class="breadcrumb"><span>RED ZONE</span><span>/</span><strong id="breadcrumb">Vista general</strong></div><div class="topbar-actions"><label class="version-picker"><span><span class="status-dot"></span> VERSIÓN PUBLICADA</span><select id="snapshot-select" aria-label="Versión de los datos" disabled><option>Cargando versiones…</option></select></label><button class="button button-quiet" id="data-button" disabled><span data-icon="clock"></span><span>Datos</span></button><a class="github-link" href="https://github.com/jhernandez68/webscraping" target="_blank" rel="noopener noreferrer" aria-label="Ver proyecto en GitHub"><span data-icon="github"></span></a></div></header>
     <main id="main" tabindex="-1"><div class="initial-state"><span class="loader"></span><h1>Preparando la parrilla…</h1><p>Cargando el archivo de carreras.</p></div></main>
     <footer class="page-footer"><span>RED ZONE <span class="muted">/ SA-MP RACING</span></span><span>Milésimas de segundo. Horas de práctica.</span><button class="text-button" id="about-button">Acerca de los datos</button></footer>
   </div>
   <dialog id="detail-dialog" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
   <dialog id="data-dialog" aria-labelledby="data-title">
-    <div class="dialog-head"><div><span class="eyebrow">TU ARCHIVO, TUS ESTADÍSTICAS</span><h2 id="data-title">En boxes.</h2></div><button class="icon-button" data-close="data-dialog" aria-label="Cerrar"><span data-icon="x"></span></button></div>
-    <p class="dialog-description">El ranking se calcula con las carreras del archivo cargado. No es una conexión en vivo al servidor.</p>
+    <div class="dialog-head"><div><span class="eyebrow">EL HISTORIAL DE LA PISTA</span><h2 id="data-title">Versiones publicadas.</h2></div><button class="icon-button" data-close="data-dialog" aria-label="Cerrar"><span data-icon="x"></span></button></div>
+    <p class="dialog-description">Estás viendo un corte publicado desde el repositorio por su administrador. No es una conexión en vivo al servidor.</p>
     <div id="data-info" class="data-info"></div>
-    <label class="import-box"><span data-icon="upload"></span><strong>Cargar carreras</strong><span>Tu resultados.txt o snapshot JSON · hasta 10 MB</span><input type="file" id="import-current" accept=".json,.txt,application/json,text/plain"></label>
-    <label class="import-box import-secondary"><span data-icon="compare"></span><strong>Comparar con un corte anterior</strong><span>Calcula cuántos récords ganó o perdió cada jugador.</span><input type="file" id="import-previous" accept=".json,.txt,application/json,text/plain"></label>
-    <p class="small muted">Los archivos se procesan en este navegador. Para conservar un corte, descárgalo. Los favoritos se guardan en este dispositivo.</p>
+    <p class="small muted">El selector de la esquina superior derecha permite consultar versiones anteriores. Los cambios del ranking se calculan automáticamente frente al corte inmediatamente anterior disponible.</p>
+    <p class="small muted">Solo quienes tienen permiso de escritura en el repositorio pueden publicar datos. Esta web no permite subir archivos. Los favoritos se guardan únicamente en tu dispositivo.</p>
     <p class="small muted">Los apodos se cuentan exactamente como aparecen. No se fusionan jugadores automáticamente. La diferencia entre cortes también puede incluir carreras añadidas o eliminadas.</p>
-    <div class="dialog-actions"><button class="button button-quiet" id="reset-data">Restaurar archivo original</button><button class="button button-primary" id="download-snapshot"><span data-icon="download"></span>Descargar corte</button></div>
+    <div class="dialog-actions"><button class="button button-primary" id="download-snapshot"><span data-icon="download"></span>Descargar corte</button></div>
   </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script type="module" src="./app.js"></script>

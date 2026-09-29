@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import puppeteer from 'puppeteer';
+import { normalizeSnapshot, getRanking } from '../public/lib/racing.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const out = resolve(root, 'test-results');
@@ -12,6 +13,9 @@ const server = spawn(process.execPath, ['server.mjs'], { cwd: root, env: { ...pr
 await new Promise((resolve, reject) => { server.stdout.once('data', resolve); server.once('error', reject); server.once('exit', code => reject(new Error(`Servidor: ${code}`))); });
 let browser;
 const checks = [];
+const catalog = JSON.parse(await readFile(resolve(root, 'public/data/versions.json'), 'utf8'));
+const latestSnapshot = normalizeSnapshot(JSON.parse(await readFile(resolve(root, 'public/data', catalog.versions[0].file), 'utf8')));
+const previousSnapshot = catalog.versions[1] ? normalizeSnapshot(JSON.parse(await readFile(resolve(root, 'public/data', catalog.versions[1].file), 'utf8'))) : null;
 try {
   browser = await puppeteer.launch({
     headless: true,
@@ -67,33 +71,34 @@ try {
   await page.click('#clear-filters');
   await page.click('[data-nav="ranking"]');
   assert.equal(await page.$eval('.podium-0 h2', el => el.textContent), 'trustmeson');
-  assert.equal(await page.$$eval('.ranking-table tbody tr', rows => rows.length), 21);
+  assert.equal(await page.$$eval('.ranking-table tbody tr', rows => rows.length), getRanking(latestSnapshot.races, previousSnapshot?.races).length);
   await page.screenshot({ path: resolve(out, 'ranking.png'), fullPage: true });
   checks.push('Ranking completo con porcentajes');
-  await writeFile(resolve(out, 'previous.json'), JSON.stringify([['1', 'A', 'Infernus', '10', 'PilotoAnterior', '01 Minutos 00:000 Segundos']]));
+  assert.equal(await page.$('input[type="file"]'), null);
+  assert.equal(await page.$$eval('#snapshot-select option', options => options.length), catalog.versions.length);
+  if (catalog.versions.length > 1) {
+    assert.match(await page.$eval('.ranking-info', el => el.textContent), /Cambios frente a/);
+    const firstVersion = catalog.versions.at(-1).id;
+    await page.select('#snapshot-select', firstVersion);
+    await page.waitForFunction(() => document.querySelector('.ranking-info')?.textContent.includes('Primer corte disponible'));
+    assert.ok(page.url().includes(`snapshot=${firstVersion}`));
+    assert.equal(await page.$('.ranking-table .delta'), null);
+    await page.reload({ waitUntil: 'networkidle0' });
+    assert.equal(await page.$eval('#snapshot-select', select => select.value), firstVersion);
+    await page.select('#snapshot-select', catalog.latest);
+    await page.waitForFunction(() => document.querySelector('.ranking-info')?.textContent.includes('Cambios frente a'));
+    await page.goBack({ waitUntil: 'networkidle0' });
+    await page.waitForFunction(id => document.querySelector('#snapshot-select')?.value === id, {}, firstVersion);
+    await page.select('#snapshot-select', catalog.latest);
+    await page.waitForFunction(() => document.querySelector('.ranking-info')?.textContent.includes('Cambios frente a'));
+  }
+  checks.push('Versiones publicadas, comparación automática, recarga y navegación atrás');
   await page.click('#data-button');
-  await (await page.$('#import-previous')).uploadFile(resolve(out, 'previous.json'));
-  await page.waitForFunction(() => document.querySelector('.ranking-table')?.textContent.includes('PilotoAnterior'));
-  assert.match(await page.$eval('.ranking-table', el => el.textContent), /-1/);
-  checks.push('Comparación muestra al piloto que pierde todos sus récords');
-  await page.click('#data-button');
-  await page.click('#reset-data');
-  await writeFile(resolve(out, 'invalid.txt'), 'archivo no válido');
-  await page.click('#data-button');
-  await (await page.$('#import-current')).uploadFile(resolve(out, 'invalid.txt'));
-  await page.waitForFunction(() => document.querySelector('#toast').textContent.includes('JSON válido'));
-  assert.equal(await page.$eval('.results-toolbar strong', el => el.textContent), '1.020');
+  assert.match(await page.$eval('#data-dialog', el => el.textContent), /no permite subir archivos/);
+  assert.equal(await page.$('#import-current'), null);
   await page.keyboard.press('Escape');
-  checks.push('Importación inválida no reemplaza los datos');
-  const dangerous = '<img src=x onerror="window.injected=true">';
-  await writeFile(resolve(out, 'unsafe.json'), JSON.stringify({ races: [{ id: '1', name: dangerous, vehicle: 'Sultan', checkpoints: 10, holder: 'Test', timeMs: 60000 }], capturedAt: 'invalid' }));
-  await page.click('#data-button');
-  await (await page.$('#import-current')).uploadFile(resolve(out, 'unsafe.json'));
-  await page.waitForFunction(() => document.querySelector('.race-name')?.textContent.includes('onerror'));
-  assert.equal(await page.evaluate(() => window.injected), undefined);
-  assert.equal(await page.$$eval('.race-name img', els => els.length), 0);
-  await page.click('#data-button');await page.click('#reset-data');
-  checks.push('Nombres importados se muestran como texto, sin ejecutar HTML');
+  checks.push('Información de datos solo lectura, sin carga de archivos');
+  await page.click('[data-nav="overview"]');
   await page.setViewport({ width: 390, height: 844 });
   await page.screenshot({ path: resolve(out, 'mobile.png'), fullPage: true });
   const size = await page.evaluate(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth }));
